@@ -104,7 +104,7 @@ const readingsList = new function() {
 
   this['2. Juledag'] = {
     I: [
-      'Jer 31,5-17',
+      'Jer 31,15-17',
       'Apg 7,52-60',
       'Matt 2,16-23',
     ],
