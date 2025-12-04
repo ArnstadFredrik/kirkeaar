@@ -13,13 +13,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Version
-        id: version
-        run: "echo ::set-output name=version::$(echo ${{ github.ref_name }} | sed 's/^v//')"
-
       - uses: actions/checkout@v4
         with:
           ref: 'main'
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
 
       - uses: actions/setup-node@v6
         with:
@@ -38,5 +38,5 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD }}
           GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_JOB_NAME: "Build and deploy"
+          GITHUB_JOB_NAME: "NPM deploy: Church-year: ${{ steps.package-version.outputs.current-version}}"
           GITHUB_JOB_STATUS: ${{ job.status }}
