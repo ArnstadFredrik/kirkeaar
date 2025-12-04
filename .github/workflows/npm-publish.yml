@@ -1,8 +1,9 @@
 name: NPM Publish
 
 on:
-  release:
-    types: [created]
+  workflow_run:
+    workflows: ["bump"]
+    types: [completed]
 
 permissions:
   id-token: write 
