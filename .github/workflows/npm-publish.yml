@@ -29,6 +29,9 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
       - run: npm install
+      - run: npm ci
+      - run: npm publish
+
 
       - name: Notify Discord
         uses: fateyan/action-discord-notifier@v1
