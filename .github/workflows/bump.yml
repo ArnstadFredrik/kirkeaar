@@ -1,0 +1,32 @@
+name: Bump Version
+
+on: 
+  push:
+    branches: main
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.package_version.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Bump Node Package Version
+        id: package_version
+        uses: KageKirin/bump-node-package-version@v0.0.1
+        with:
+          patch: true
+      
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.package_version.outputs.version }}
+          name: Release ${{ steps.package_version.outputs.version }}
+          body: ${{ steps.package_version.outputs.changelog }}
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4.13.1
+        with:
+          commit_message: "CI: bump package.json to ${{ steps.package_version.outputs.version}}"
