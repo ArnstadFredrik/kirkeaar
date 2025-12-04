@@ -32,9 +32,11 @@ jobs:
       - run: npm ci
       - run: npm publish
 
-
-      - name: Notify Discord
-        uses: fateyan/action-discord-notifier@v1
-        with:
-          message-title:  church-year:${{ github.ref_name }} published to npm
-          webhook: ${{ secrets.DISCORD }}
+      - name: Notify discord
+        uses: th0th/notify-discord@v0.4.1
+        if: ${{ always() }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_JOB_NAME: "Build and deploy"
+          GITHUB_JOB_STATUS: ${{ job.status }}
